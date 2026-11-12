@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estrategia de lanzamiento</title>
+<meta name="description" content="El video de estrategia + tu Guía de Lanzamiento y el Arsenal Creativo.">
+<meta property="og:title" content="Estrategia de lanzamiento · Larry">
+<meta property="og:description" content="El video de estrategia + tu Guía de Lanzamiento y el Arsenal Creativo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0b0b0b; --card:#151515; --line:#2a2a2a; --txt:#f2f2f2; --mut:#9a9a9a; --acc:#ffffff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--txt); font-family:Inter,system-ui,sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:860px; margin:0 auto; padding:48px 16px 64px; }
+  .tag { display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--mut); border:1px solid var(--line); border-radius:99px; padding:5px 12px; }
+  h1 { font-size:clamp(30px,6vw,48px); font-weight:800; letter-spacing:-.02em; line-height:1.1; margin:18px 0 12px; }
+  .lead { color:var(--mut); font-size:17px; max-width:600px; }
+  .video { margin-top:32px; position:relative; aspect-ratio:16/9; border-radius:16px; overflow:hidden; background:#000; border:1px solid var(--line); }
+  .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .caps { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .caps button { background:var(--card); color:var(--txt); border:1px solid var(--line); border-radius:99px; padding:8px 14px; font:500 14px Inter,sans-serif; cursor:pointer; transition:border-color .15s; }
+  .caps button:hover { border-color:#666; }
+  .caps b { color:var(--mut); font-weight:500; margin-right:6px; font-variant-numeric:tabular-nums; }
+  h2 { font-size:22px; font-weight:700; margin:56px 0 6px; }
+  .sub { color:var(--mut); margin-bottom:18px; }
+  .links { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .link { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--txt); background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; transition:border-color .15s, transform .15s; }
+  .link:hover { border-color:#777; transform:translateY(-2px); }
+  .num { font-size:12px; color:var(--mut); letter-spacing:.1em; }
+  .link strong { font-size:20px; font-weight:700; }
+  .link span { color:var(--mut); font-size:15px; }
+  .go { margin-top:auto; padding-top:8px; font-weight:700; font-size:15px; }
+  footer { margin-top:56px; color:var(--mut); font-size:13px; text-align:center; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <span class="tag">Estrategia de lanzamiento</span>
+  <h1>Cómo hacer que tu canción llegue</h1>
+  <p class="lead">Mirá el video completo primero. Después usá la <strong>Guía de Lanzamiento</strong> y el <strong>Arsenal Creativo</strong> para llevarlo a la práctica.</p>
+
+  <div class="video">
+    <iframe id="yt" src="https://www.youtube-nocookie.com/embed/KAyeF_NX54M?enablejsapi=1&rel=0&playsinline=1&modestbranding=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Estrategia de contenido"></iframe>
+  </div>
+  <div class="caps" id="caps"></div>
+
+  <h2>Tus herramientas</h2>
+  <p class="sub">Abrilas cuando termines el video.</p>
+  <div class="links">
+    <a class="link" href="https://larryprog.github.io/planlanzamiento/" target="_blank" rel="noopener">
+      <span class="num">01</span>
+      <strong>Guía de Lanzamiento</strong>
+      <span>Tu plan personalizado: el paso a paso para lanzar tu canción.</span>
+      <span class="go">Abrir guía →</span>
+    </a>
+    <a class="link" href="https://larryprog.github.io/Arsenal-Creativo/" target="_blank" rel="noopener">
+      <span class="num">02</span>
+      <strong>Arsenal Creativo</strong>
+      <span>Cómo escuchar y reversionar tus canciones para que tus reels tengan el máximo nivel.</span>
+      <span class="go">Abrir arsenal →</span>
+    </a>
+  </div>
+
+  <footer>Larry Prod</footer>
+</main>
+<script>
+  const caps = [[0,'Qué vas a aprender'],[340,'El embudo de contenido'],[495,'Cómo armar un reel'],[638,'Romper la barrera del algoritmo']];
+  const fmt = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+  const yt = document.getElementById('yt');
+  const box = document.getElementById('caps');
+  caps.forEach(([t, n]) => {
+    const b = document.createElement('button');
+    b.innerHTML = '<b>' + fmt(t) + '</b>' + n;
+    b.onclick = () => {
+      const cmd = f => yt.contentWindow.postMessage(JSON.stringify({ event:'command', func:f[0], args:f[1] }), '*');
+      cmd(['seekTo',[t,true]]); cmd(['playVideo',[]]);
+      yt.scrollIntoView({ behavior:'smooth', block:'center' });
+    };
+    box.appendChild(b);
+  });
+</script>
+</body>
+</html>
